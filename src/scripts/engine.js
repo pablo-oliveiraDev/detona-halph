@@ -21,12 +21,14 @@ const state = {
 
 function initialize() {
     addListinerHitBox();
+
 };
 initialize();
+playSound('startGame.mp3', 1);
 
-function playSound(audioName) {
-    let audio = new Audio(`./src/audios/${audioName}.m4a`);
-    audio.volume = 0.2;
+function playSound(audioName, volume) {
+    let audio = new Audio(`./src/audios/${audioName}`);
+    audio.volume = volume;
     audio.play();
 };
 function tryAgain() {
@@ -37,6 +39,7 @@ function tryAgain() {
         state.view.timeLeft.textContent = state.values.currentTime;
 
     } else {
+        playSound('gameOver', 0.2)
         alert('Game Over');
         clearInterval(state.actions.countDownTimerId);
         clearInterval(state.actions.timerId);
@@ -53,6 +56,7 @@ function countDown() {
         // clearInterval(state.actions.countDownTimerId);
         // clearInterval(state.actions.timerId);       
     } else if (state.values.lives < 0) {
+        playSound('gameOver.mp3', 0.2);
         alert('Game Over');
         clearInterval(state.actions.countDownTimerId);
         clearInterval(state.actions.timerId);
@@ -75,10 +79,11 @@ function addListinerHitBox() {
                 state.values.result++;
                 state.view.score.textContent = state.values.result;
                 state.values.hitPosition = null;
-                playSound('hit');
-            }else{
+                playSound('hit.m4a', 0.2);
+            } else {
                 state.values.result--;
                 state.view.score.textContent = state.values.result;
+                playSound('errou.mp3', 0.2)
             }
         })
     });
