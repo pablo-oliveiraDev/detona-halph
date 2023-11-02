@@ -21,10 +21,10 @@ const state = {
 
 function initialize() {
     addListinerHitBox();
-
+    playSound('startGame.mp3', 1);
 };
 initialize();
-playSound('startGame.mp3', 1);
+
 
 function playSound(audioName, volume) {
     let audio = new Audio(`./src/audios/${audioName}`);
@@ -37,9 +37,10 @@ function tryAgain() {
         state.view.lives.textContent = state.values.lives < 0 ? 0 : state.values.lives;
         state.values.currentTime += 60;
         state.view.timeLeft.textContent = state.values.currentTime;
+        playSound('startGame.mp3', 1);
 
     } else {
-        playSound('gameOver', 0.2)
+        playSound('gameOver.mp3', 0.2)
         alert('Game Over');
         clearInterval(state.actions.countDownTimerId);
         clearInterval(state.actions.timerId);
