@@ -20,10 +20,14 @@ const state = {
 };
 
 function initialize() {
-    addListinerHitBox();
-    playSound('startGame.mp3', 1);
+    addListenerHitBox();
+
 };
 initialize();
+for (let i = 0; i < 58; i++) {
+    playSound('startGame.mp3', 0.07);
+};
+
 
 
 function playSound(audioName, volume) {
@@ -31,7 +35,7 @@ function playSound(audioName, volume) {
     audio.volume = volume;
     audio.play();
 };
-function tryAgain() {
+async function tryAgain() {
     if (confirm('O seu resultado foi: ' + state.values.result + ' \n Deseja continuar ?') === true) {
         state.values.lives -= 1;
         state.view.lives.textContent = state.values.lives < 0 ? 0 : state.values.lives;
@@ -40,7 +44,7 @@ function tryAgain() {
         playSound('startGame.mp3', 1);
 
     } else {
-        playSound('gameOver.mp3', 0.2)
+        await playSound('gameOver.mp3', 0.2)
         alert('Game Over');
         clearInterval(state.actions.countDownTimerId);
         clearInterval(state.actions.timerId);
@@ -58,7 +62,7 @@ function countDown() {
         // clearInterval(state.actions.timerId);       
     } else if (state.values.lives < 0) {
         playSound('gameOver.mp3', 0.2);
-        alert('Game Over');
+        //alert('Game Over');
         clearInterval(state.actions.countDownTimerId);
         clearInterval(state.actions.timerId);
         location.reload();
@@ -73,7 +77,7 @@ function randomSquare() {
     randomSquare.classList.add('enemy');
     state.values.hitPosition = randomSquare.id;
 };
-function addListinerHitBox() {
+function addListenerHitBox() {
     state.view.square.forEach((square) => {
         square.addEventListener('mousedown', () => {
             if (square.id === state.values.hitPosition) {
@@ -89,4 +93,4 @@ function addListinerHitBox() {
         })
     });
 };
-
+playSound('gameOver.mp3', 0.2);
